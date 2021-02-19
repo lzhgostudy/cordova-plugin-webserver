@@ -6,13 +6,13 @@ const ONREQUEST_FUNCTION = 'onRequest';
 const SENDRESPONSE_FUNCION = 'sendResponse';
 const STOP_FUNCTION = 'stop';
 
-export function start(success_callback, error_callback, host, port) {
+export function start(success_callback, error_callback, port, host) {
   let params = [];
-  if (host) {
-    params.push(host);
-  }
   if (port) {
     params.push(port);
+  }
+  if (host) {
+    params.push(host);
   }
   exec(
     success_callback,

@@ -61,8 +61,8 @@ public class Webserver extends CordovaPlugin {
         }
 
         if (args.length() == 2) {
-            host = args.getString(0);
-            port = args.getInt(1);
+            port = args.getInt(0);
+            host = args.getString(1);
         }
 
         if (this.nanoHTTPDWebserver != null){
