@@ -16,7 +16,7 @@
   </js-module>
 
   <platform name="android">
-    <framework src="org.nanohttpd:nanohttpd:+" />
+    <framework src="com.gitee.l0km:nanohttpd:+" />
     <source-file src="src/android/Webserver.java" target-dir="src/org/apache/cordova/plugin"/>
     <source-file src="src/android/NanoHTTPDWebserver.java" target-dir="src/org/apache/cordova/plugin"/>
     <config-file target="config.xml" parent="/*">
