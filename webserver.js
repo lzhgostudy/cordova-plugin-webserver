@@ -20,10 +20,13 @@ var ONREQUEST_FUNCTION = 'onRequest';
 var SENDRESPONSE_FUNCION = 'sendResponse';
 var STOP_FUNCTION = 'stop';
 
-function start(success_callback, error_callback, port) {
-  var params = [];
+function start(success_callback, error_callback, port, host) {
+  let params = [];
   if (port) {
     params.push(port);
+  }
+  if (host) {
+    params.push(host);
   }
   (0, _exec2.default)(success_callback, error_callback, WEBSERVER_CLASS, START_FUNCTION, params);
 }
