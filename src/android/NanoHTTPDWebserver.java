@@ -19,7 +19,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
-import fi.iki.elonen.NanoHTTPD;
+// import fi.iki.elonen.NanoHTTPD;
+import org.nanohttpd.protocols.http.NanoHTTPD;
 
 public class NanoHTTPDWebserver extends NanoHTTPD {
 
