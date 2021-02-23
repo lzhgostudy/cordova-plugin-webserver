@@ -24,7 +24,6 @@ import org.nanohttpd.protocols.http.IHTTPSession;
 import org.nanohttpd.protocols.http.request.Method;
 import org.nanohttpd.protocols.http.response.Response;
 import org.nanohttpd.protocols.http.response.Status;
-import org.nanohttpd.protocols.http.response.IStatus;
 
 public class NanoHTTPDWebserver extends NanoHTTPD {
 
@@ -88,7 +87,7 @@ public class NanoHTTPDWebserver extends NanoHTTPD {
 
     private Response newFixedFileResponse(File file, String mime) throws FileNotFoundException {
         Response res;
-        res = newFixedLengthResponse(Response.Status.OK, mime, new FileInputStream(file), (int) file.length());
+        res = Response.newFixedLengthResponse(Status.OK, mime, new FileInputStream(file), (int) file.length());
         res.addHeader("Accept-Ranges", "bytes");
         return res;
     }
@@ -137,7 +136,7 @@ public class NanoHTTPDWebserver extends NanoHTTPD {
                     // and the startFrom of the range is satisfiable
                     // would return range from file
                     // respond with not-modified
-                    res = newFixedLengthResponse(Response.Status.NOT_MODIFIED, mime, "");
+                    res = Response.newFixedLengthResponse(Status.NOT_MODIFIED, mime, "");
                     res.addHeader("ETag", etag);
                 } else {
                     if (endAt < 0) {
@@ -151,7 +150,7 @@ public class NanoHTTPDWebserver extends NanoHTTPD {
                     FileInputStream fis = new FileInputStream(file);
                     fis.skip(startFrom);
 
-                    res = newFixedLengthResponse(Response.Status.PARTIAL_CONTENT, mime, fis, newLen);
+                    res = Response.newFixedLengthResponse(Status.PARTIAL_CONTENT, mime, fis, newLen);
                     res.addHeader("Accept-Ranges", "bytes");
                     res.addHeader("Content-Length", "" + newLen);
                     res.addHeader("Content-Range", "bytes " + startFrom + "-" + endAt + "/" + fileLen);
@@ -162,21 +161,21 @@ public class NanoHTTPDWebserver extends NanoHTTPD {
                 if (headerIfRangeMissingOrMatching && range != null && startFrom >= fileLen) {
                     // return the size of the file
                     // 4xx responses are not trumped by if-none-match
-                    res = newFixedLengthResponse(Response.Status.RANGE_NOT_SATISFIABLE, NanoHTTPD.MIME_PLAINTEXT, "");
+                    res = Response.newFixedLengthResponse(Status.RANGE_NOT_SATISFIABLE, NanoHTTPD.MIME_PLAINTEXT, "");
                     res.addHeader("Content-Range", "bytes */" + fileLen);
                     res.addHeader("ETag", etag);
                 } else if (range == null && headerIfNoneMatchPresentAndMatching) {
                     // full-file-fetch request
                     // would return entire file
                     // respond with not-modified
-                    res = newFixedLengthResponse(Response.Status.NOT_MODIFIED, mime, "");
+                    res = Response.newFixedLengthResponse(Status.NOT_MODIFIED, mime, "");
                     res.addHeader("ETag", etag);
                 } else if (!headerIfRangeMissingOrMatching && headerIfNoneMatchPresentAndMatching) {
                     // range request that doesn't match current etag
                     // would return entire (different) file
                     // respond with not-modified
 
-                    res = newFixedLengthResponse(Response.Status.NOT_MODIFIED, mime, "");
+                    res = Response.newFixedLengthResponse(Status.NOT_MODIFIED, mime, "");
                     res.addHeader("ETag", etag);
                 } else {
                     // supply the file
@@ -186,7 +185,7 @@ public class NanoHTTPDWebserver extends NanoHTTPD {
                 }
             }
         } catch (IOException ioe) {
-            res = newFixedLengthResponse(Response.Status.FORBIDDEN, NanoHTTPD.MIME_PLAINTEXT, ioe.getMessage());
+            res = Response.newFixedLengthResponse(Status.FORBIDDEN, NanoHTTPD.MIME_PLAINTEXT, ioe.getMessage());
         }
 
         return res;
@@ -255,8 +254,8 @@ public class NanoHTTPDWebserver extends NanoHTTPD {
             return response;
         } else {
             try {
-                response = newFixedLengthResponse(
-                        Response.Status.lookup(responseObject.getInt("status")),
+                response = Response.newFixedLengthResponse(
+                        Status.lookup(responseObject.getInt("status")),
                         getContentType(responseObject),
                         responseObject.getString("body")
                 );
