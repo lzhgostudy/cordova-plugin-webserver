@@ -24,6 +24,7 @@ import org.nanohttpd.protocols.http.IHTTPSession;
 import org.nanohttpd.protocols.http.request.Method;
 import org.nanohttpd.protocols.http.response.Response;
 import org.nanohttpd.protocols.http.response.Status;
+import org.nanohttpd.protocols.http.response.IStatus;
 
 public class NanoHTTPDWebserver extends NanoHTTPD {
 
