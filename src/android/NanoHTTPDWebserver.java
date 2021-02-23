@@ -21,6 +21,9 @@ import java.util.UUID;
 
 // import fi.iki.elonen.NanoHTTPD;
 import org.nanohttpd.protocols.http.NanoHTTPD;
+import org.nanohttpd.protocols.http.IHTTPSession;
+import org.nanohttpd.protocols.http.request.Method;
+import org.nanohttpd.protocols.http.response.Response;
 
 public class NanoHTTPDWebserver extends NanoHTTPD {
 
